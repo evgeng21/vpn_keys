@@ -6,4 +6,4 @@ from outline_users.models import OutlineKey
 class OutlineKeySerializer(serializers.ModelSerializer):
     class Meta:
         model = OutlineKey
-        fields = '__all__'
+        fields = ['outline_key']

@@ -1,3 +1,4 @@
+version: '3'
 services:
   web-app:
     build:
@@ -5,7 +6,7 @@ services:
     ports:
       - "8010:8010"
     volumes:
-      - /src /src/data
+      - /src:/src/data
     environment:
       - DB_HOST=database
       - DB_NAME=dbname

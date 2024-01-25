@@ -17,7 +17,17 @@ class OutlineKeysView(APIView):
         outline_user = OutlineUser.objects.all().first()
         outline_user.ip_address = user_ip
         outline_user.save()
-        return Response(serializer.data.get('outline_key'))
+        key, server_data = serializer.data.get('outline_key').split('//')[1].split('@')
+        decode_key = base64.b64decode(key).decode('utf-8')
+        method, password = decode_key.split(':')
+        server, server_port = server_data.split('/')[0].split(':')
+        key_data = {
+                'server': server,
+                'server_port': server_port,
+                'password': password,
+                'method': method,
+        }
+        return Response(key_data)
 
     def post(self, request):
         # key, server_data = request.data.get('outline_key').split('//')[1].split('@')

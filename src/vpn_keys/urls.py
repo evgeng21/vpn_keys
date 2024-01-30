@@ -19,11 +19,12 @@ from django.views.static import serve
 from django.contrib import admin
 from django.urls import path
 
-from outline_users.views import OutlineKeysView
+from outline_users.views import OutlineKeysView, KeyForOutline
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('post-key/', OutlineKeysView.as_view()),
     path('post-key/<int:pk>', OutlineKeysView.as_view()),
+    path('get-client-key/<int:pk>', KeyForOutline.as_view()),
 ]
 

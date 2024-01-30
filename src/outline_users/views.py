@@ -12,18 +12,15 @@ class OutlineKeysView(APIView):
     def get(self, request, pk):
         key_data = OutlineKey.objects.get(pk=pk)
         serializer = OutlineKeySerializer(key_data)
-        user_ip_1 = request.META.get('REMOTE_ADDR')
-        user_ip_2 = request.META.get('HTTP_X_FORWARDER_FOR')
-        print(user_ip_1)
-        print(user_ip_2)
+        user_ip = request.META.get('HTTP_X_REAL_IP')
         uniq_id = request.GET.get('uniq_id')
         outline_user = OutlineUser.objects.get(uniq_id=uniq_id)
-        outline_user.ip_address = user_ip_1
+        outline_user.ip_address = user_ip
         outline_user.save()
 
         log_write = Logging()
         log_write.outline_key = key_data
-        log_write.ip_address = user_ip_2
+        log_write.ip_address = user_ip
         log_write.outline_user = outline_user
         log_write.save()
 
